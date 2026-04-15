@@ -24,8 +24,8 @@ async function findOneByUsername(username) {
 
     if (result.rowCount == 0) {
       throw new NotFoundError({
-        message: "O username não foi encontrado no sistema.",
-        action: "Verifique se o username está digitrado corretamente.",
+        message: "O username informado não foi encontrado no sistema.",
+        action: "Verifique se o username está digitado corretamente.",
       });
     }
 
@@ -124,7 +124,7 @@ async function validateUniqueUsername(username) {
 
   if (result.rowCount > 0) {
     throw new ValidationError({
-      message: "O username informado já está sendo utilizado",
+      message: "O username informado já está sendo utilizado.",
       action: "Utilize outro username para realizar esta operação.",
     });
   }
@@ -145,7 +145,7 @@ async function validateUniqueEmail(email) {
 
   if (result.rowCount > 0) {
     throw new ValidationError({
-      message: "O email informado já está sendo utilizado",
+      message: "O email informado já está sendo utilizado.",
       action: "Utilize outro email para realizar esta operação.",
     });
   }
