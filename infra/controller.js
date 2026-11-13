@@ -1,5 +1,6 @@
 import * as cookie from "cookie";
 import session from "models/session.js";
+
 import {
   InternalServerError,
   MethodNotAllowedError,
@@ -10,15 +11,17 @@ import {
 
 function onNoMatchHandler(request, response) {
   const publicErrorObject = new MethodNotAllowedError();
+
   response.status(publicErrorObject.status_code).json(publicErrorObject);
 }
 
 function onErrorHandler(error, request, response) {
-  if (
-    error instanceof ValidationError ||
-    error instanceof NotFoundError ||
-    error instanceof UnauthorizedError
-  ) {
+  if (error instanceof ValidationError || error instanceof NotFoundError) {
+    return response.status(error.status_code).json(error);
+  }
+
+  if (error instanceof UnauthorizedError) {
+    clearSessionCookie(response);
     return response.status(error.status_code).json(error);
   }
 
